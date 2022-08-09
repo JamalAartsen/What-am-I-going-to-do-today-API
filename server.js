@@ -1,7 +1,7 @@
 const express = require('express');
 const activities = require('./Routes/activities');
 const mongoose = require('mongoose');
-require('dotenv/config')
+require('dotenv').config({ path: 'ENV_FILENAME' });
 const app = express();
 const bodyParser = require('body-parser');
 const Constants = require("./Constants");
