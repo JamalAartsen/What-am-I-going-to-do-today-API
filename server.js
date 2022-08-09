@@ -19,6 +19,6 @@ app.get('/', (req, res) => {
     res.json({ 'Result': Constants.WELCOME_MESSAGE });
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
     console.log(Constants.API_RUNNING_MESSAGE);
 });
