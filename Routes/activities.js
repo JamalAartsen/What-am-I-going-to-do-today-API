@@ -1,4 +1,5 @@
 const express = require("express");
+const activity = require("../models/activity");
 const Activity = require("../models/activity");
 const router = express.Router();
 
@@ -9,8 +10,8 @@ router.route('/')
         try {
             results.results = await Activity.find();
             res.json(results);
-        } catch (e) {
-            res.status(500).json({ message: e.message });
+        } catch (err) {
+            res.status(500).json({ message: err.message });
         }
     })
     .post((req, res) => {
@@ -20,11 +21,58 @@ router.route('/')
 
         activity.save((err) => {
             if (err) {
-                res.json({ "Error": err.message });
+                res.json({ 'Error': err.message });
             } else {
-                res.json({ "Result": "Added activity successfully!" })
+                res.json({ 'Result': 'Added activity successfully!' });
             }
         });
     });
 
-    module.exports = router
+router.route('/:id')
+    .get((req, res) => {
+        const id = req.params.id;
+
+        Activity.findOne({ _id: id }, function (err, activity) {
+            if (err) {
+                res.json({ 'Error': err.message });
+            } else {
+                if (activity) {
+                    res.json(activity);
+                } else {
+                    res.json({ 'Result': 'No character found on this id' });
+                }
+            }
+        });
+    })
+    .patch((req, res) => {
+        const id = req.params.id;
+
+        Activity.updateOne({ _id: id }, { '$set': { 'activity': req.body.activity } }, function (err, activity) {
+            if (err) {
+                res.json({ 'Error': err.message });
+            } else {
+                if (activity) {
+                    res.json({ 'Result': 'Activity is successful changed!' });
+                } else {
+                    res.json({ 'Result': 'No character found on this id' });
+                }
+            }
+        });
+    })
+    .delete((req, res) => {
+        const id = req.params.id;
+
+        Activity.deleteOne({ _id: id }, function (err, activity) {
+            if (err) {
+                res.json({ 'Error': err.message });
+            } else {
+                if (activity) {
+                    res.json({ 'Result': 'Activity is deleted!' });
+                } else {
+                    res.json({ 'Result': 'No character found on this id' });
+                }
+            }
+        });
+    });
+
+module.exports = router

@@ -4,18 +4,21 @@ const mongoose = require('mongoose');
 require('dotenv/config')
 const app = express();
 const bodyParser = require('body-parser');
+const Constants = require("./Constants");
+const random = require('./Routes/randomactivitiy');
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use('/activities', activities);
+app.use('/random', random);
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true }, () =>{
-    console.log('Connected to DB!')
+    console.log(Constants.DB_CONNECTION)
 });
 
 app.get('/', (req, res) => {
-    res.json({ 'Result': 'Welcome to "What am I going to do today?" API.' });
+    res.json({ 'Result': Constants.WELCOME_MESSAGE });
 });
 
 app.listen(3000, () => {
-    console.log("'What am I going to do today?' API is running...");
+    console.log(Constants.API_RUNNING_MESSAGE);
 });
