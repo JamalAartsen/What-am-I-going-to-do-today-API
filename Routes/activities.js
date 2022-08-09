@@ -1,4 +1,5 @@
 const express = require("express");
+const Constants = require("../Constants");
 const activity = require("../models/activity");
 const Activity = require("../models/activity");
 const router = express.Router();
@@ -23,7 +24,7 @@ router.route('/')
             if (err) {
                 res.json({ 'Error': err.message });
             } else {
-                res.json({ 'Result': 'Added activity successfully!' });
+                res.json({ 'Result': Constants.SUCCESSFUL_ADD });
             }
         });
     });
@@ -39,7 +40,7 @@ router.route('/:id')
                 if (activity) {
                     res.json(activity);
                 } else {
-                    res.json({ 'Result': 'No character found on this id' });
+                    res.json({ 'Result': Constants.NO_CHARACTER_FOUND });
                 }
             }
         });
@@ -52,9 +53,9 @@ router.route('/:id')
                 res.json({ 'Error': err.message });
             } else {
                 if (activity) {
-                    res.json({ 'Result': 'Activity is successful changed!' });
+                    res.json({ 'Result': Constants.SUCCESSFUL_CHANGED });
                 } else {
-                    res.json({ 'Result': 'No character found on this id' });
+                    res.json({ 'Result': Constants.NO_CHARACTER_FOUND });
                 }
             }
         });
@@ -67,9 +68,9 @@ router.route('/:id')
                 res.json({ 'Error': err.message });
             } else {
                 if (activity) {
-                    res.json({ 'Result': 'Activity is deleted!' });
+                    res.json({ 'Result': Constants.SUCCESSFUL_DELETED });
                 } else {
-                    res.json({ 'Result': 'No character found on this id' });
+                    res.json({ 'Result': Constants.NO_CHARACTER_FOUND });
                 }
             }
         });
