@@ -7,8 +7,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const Constants = require("./Constants");
 const random = require('./Routes/randomactivitiy');
+const cors = require("cors");
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use('/activities', activities);
 app.use('/random', random);
 
