@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/')
     .get(async (req, res) => {
         const results = {};
-
+        console.log("Example")
         try {
             results.results = await Activity.find();
             res.json(results);
